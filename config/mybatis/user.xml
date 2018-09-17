@@ -33,6 +33,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 	新增用户信息 -->
 	<insert id="insertUser" parameterType="com.itheima.mybatis.pojo.User">
+	<!-- selectKey:用于配置主键返回
+	 		 keyProperty：要绑定的pojo属性
+	 		 resultType:属性数据类型
+	 		 order:指定什么时候执行，AFTER之后
+	 	-->
+		<selectKey keyColumn="id" keyProperty="id" order="AFTER" resultType="int">
+			SELECT
+				LAST_INSERT_ID()
+		</selectKey>
 		INSERT INTO USER
 		            (`username`,
 		             `birthday`,

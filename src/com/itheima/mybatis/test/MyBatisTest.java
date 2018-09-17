@@ -81,11 +81,12 @@ public class MyBatisTest {
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		//插入用户信息
 		User user = new User();
-		user.setUsername("赵子龙");
+		user.setUsername("赵子龙2");
 		user.setBirthday(new Date());
 		user.setSex("男");
 		user.setAddress("常山");
 		sqlSession.insert("user.insertUser", user);
+		//System.out.println(id);
 		//提交事务
 		sqlSession.commit();
 		//释放资源
