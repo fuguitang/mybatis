@@ -13,6 +13,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 
 import com.itheima.mybatis.pojo.User;
+import com.itheima.mybatis.utils.SqlSessionFactoryUtils;
 
 public class MyBatisTest {
 	
@@ -87,6 +88,54 @@ public class MyBatisTest {
 		user.setAddress("常山");
 		sqlSession.insert("user.insertUser", user);
 		//System.out.println(id);
+		//提交事务
+		sqlSession.commit();
+		//释放资源
+		sqlSession.close();
+	}
+	
+	/**
+	 * 修改用户信息
+	 * @throws IOException
+	 */
+	@Test
+	public void updateUser() throws IOException {
+		//创建SqlSessionFactoryBuilder对象
+		SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
+		//创建核心配置文件的输入流
+		InputStream inputStream = Resources.getResourceAsStream("SqlMapConfig.xml");
+		//创建SqlSessionFactory对象
+		SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(inputStream);
+		//创建SqlSession对象
+		SqlSession session = sqlSessionFactory.openSession();
+		//修改操作
+		User user = new User();
+		user.setId(26);
+		user.setUsername("王某某");
+		user.setBirthday(new Date());
+		user.setSex("女");
+		user.setAddress("北京");
+		session.update("user.updateUser", user);
+		//提交事务
+		session.commit();
+		//释放资源
+		session.close();
+	}
+	
+	/**
+	 * 删除用户信息
+	 */
+	@Test
+	public void deleteUserById() {
+		
+		//创建SqlSessionFactory对象
+		SqlSessionFactory factory = SqlSessionFactoryUtils.getSqlSessionFactory();
+		//创建SqlSession对象
+		SqlSession sqlSession = factory.openSession();
+		//执行删除操作
+		User user = new User();
+		user.setId(28);
+		sqlSession.delete("user.deleteUserById", user);
 		//提交事务
 		sqlSession.commit();
 		//释放资源
