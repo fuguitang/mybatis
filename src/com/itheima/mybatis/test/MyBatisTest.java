@@ -56,10 +56,12 @@ public class MyBatisTest {
 		//创建SqlSession对象
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		//执行查询
-		List<User> list = sqlSession.selectList("user.findByUsername", "王");
+		User user = new User();
+		user.setUsername("%王%");
+		List<User> list = sqlSession.selectList("user.findByUsername", user);
 		//输出结果
-		for (User user : list) {
-			System.out.println(user);
+		for (User user2 : list) {
+			System.out.println(user2);
 		}
 		//释放资源
 		sqlSession.close();
@@ -87,7 +89,7 @@ public class MyBatisTest {
 		user.setSex("男");
 		user.setAddress("常山");
 		sqlSession.insert("user.insertUser", user);
-		//System.out.println(id);
+		System.out.println(user);
 		//提交事务
 		sqlSession.commit();
 		//释放资源

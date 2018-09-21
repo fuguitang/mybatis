@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 	根据用户姓名查询用户信息 -->
-	<select id="findByUsername" parameterType="String" resultType="com.itheima.mybatis.pojo.User">
+	<select id="findByUsername" parameterType="com.itheima.mybatis.pojo.User" resultType="com.itheima.mybatis.pojo.User">
 		SELECT
 			`id`,
 			`username`,
@@ -28,7 +28,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM
 			`USER`
 		WHERE
-			username like '%${value}%'
+			username like '%${username}%'
+			AND `sex` = #{sex}
 	</select>
 	
 	<!-- 	新增用户信息 -->
@@ -42,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			SELECT
 				LAST_INSERT_ID()
 		</selectKey>
-		INSERT INTO USER
+		INSERT INTO `USER`
 		            (`username`,
 		             `birthday`,
 		             `sex`,
@@ -60,7 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			 `sex` = #{sex} ,
 			 `address` = #{address}
 			WHERE
-				`id` = 26;
+				`id` = #{id};
 	</update>
 	
 	<delete id="deleteUserById" parameterType="com.itheima.mybatis.pojo.User">
