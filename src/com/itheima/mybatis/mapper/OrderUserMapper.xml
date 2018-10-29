@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.mybatis.mapper.OrderUserMapper">
+	<resultMap type="orderuser" id="order_user_mapper">
+		<!-- id标签用于绑定主键 -->
+		<id property="id" column="id"/>
+		<!-- 使用result绑定普通字段 -->
+		<result property="userId" column="user_id"/>
+		<result property="number" column="number"/>
+		<result property="createtime" column="createtime"/>
+		<result property="note" column="note"/>
+		<association property="user" javaType="com.itheima.mybatis.pojo.User">
+			<id property="id" column="user_id"/>
+			<result property="username" column="username"/>
+			<result property="birthday" column="birthday"/>
+			<result property="sex" column="sex"/>
+			<result property="address" column="address"/>
+		</association>
+	</resultMap>
+	<select id="findUserOrderByOrderId" parameterType="int" resultMap="order_user_mapper">
+		SELECT
+			o.`id`,
+			o.`user_id`,
+			o.`number`,
+			o.`createtime`,
+			o.`note`,
+			u.`username`,
+			u.`birthday`,
+			u.`sex`,
+			u.`address`
+		FROM
+			`order` o
+		LEFT JOIN `user` u ON o.user_id = u.id 
+		where o.id = #{id}
+	</select>
+	
+	<select id="findUserOrderByUserName" parameterType="String" resultMap="order_user_mapper">
+		SELECT
+			o.`id`,
+			o.`user_id`,
+			o.`number`,
+			o.`createtime`,
+			o.`note`,
+			u.`username`,
+			u.`birthday`,
+			u.`sex`,
+			u.`address`
+		FROM
+			`order` o
+		LEFT JOIN `user` u ON o.user_id = u.id where u.`username` like '%${value}%'
+	</select>
+</mapper>
