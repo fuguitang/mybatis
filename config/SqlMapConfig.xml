@@ -3,6 +3,17 @@
 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	<!-- 加载规则，首先加载标签内部属性，再加载外部文件，名称相同时，会替换相同名称的内容 -->
+	<properties resource="jdbc.properties">
+		<property name="jdbc.username" value="root12"/>
+	</properties>
+	<!-- 别名 -->
+	<typeAliases>
+		<!-- 单个别名定义 -->
+<!-- 		<typeAlias type="com.itheima.mybatis.pojo.User"/> -->
+		<!-- 别名包扫描器(推荐使用此方式)，整个包下的类都被定义别名，别名为类名，不区分大小写-->
+		<package name="com.itheima.mybatis.pojo"/>
+	</typeAliases>
 	<!-- 和spring整合后 environments配置将废除 -->
 	<environments default="development">
 		<environment id="development">
@@ -10,16 +21,23 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 			<transactionManager type="JDBC" />
 			<!-- 数据库连接池 -->
 			<dataSource type="POOLED">
-				<property name="driver" value="com.mysql.jdbc.Driver" />
-				<property name="url"
-					value="jdbc:mysql://localhost:3306/mybatis?characterEncoding=utf-8" />
-				<property name="username" value="root" />
-				<property name="password" value="root" />
+				<property name="driver" value="${jdbc.driver}" />
+				<property name="url" value="${jdbc.url}" />
+				<property name="username" value="${jdbc.username}" />
+				<property name="password" value="${jdbc.password}" />
 			</dataSource>
+<!-- 			<dataSource type="POOLED"> -->
+<!-- 				<property name="driver" value="com.mysql.jdbc.Driver" /> -->
+<!-- 				<property name="url" -->
+<!-- 					value="jdbc:mysql://localhost:3306/mybatis?characterEncoding=utf-8" /> -->
+<!-- 				<property name="username" value="root" /> -->
+<!-- 				<property name="password" value="root" /> -->
+<!-- 			</dataSource> -->
 		</environment>
 	</environments>
 	<mappers>
 <!-- 		<mapper resource="mybatis/user.xml"/> -->
-		<mapper resource="mybatis/UserMapper.xml"/>
+<!-- 		<mapper resource="mybatis/UserMapper.xml"/> -->
+		<package name="com.itheima.mybatis.mapper"/>
 	</mappers>
 </configuration>

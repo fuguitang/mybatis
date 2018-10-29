@@ -7,7 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
 
-import com.itheima.mybatis.dao.UserMapper;
+import com.itheima.mybatis.mapper.UserMapper;
 import com.itheima.mybatis.pojo.User;
 import com.itheima.mybatis.utils.SqlSessionFactoryUtils;
 
